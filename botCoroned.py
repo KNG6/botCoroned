@@ -118,6 +118,7 @@ worldScrap=worldSoup.find_all("tr")
 world={"Asia":{},"Europe":{},"America":{},"Other":{},"Oceania":{},"Africa":{},"Total":{}}
 logs("[*] Ajoute des pays du monde dans la base de donnée...")
 #Data organization part
+oldRegionName="\xa0"
 for region in worldScrap:
 	listRegion=region.find_all("td")
 	if listRegion!=[]:
@@ -128,7 +129,9 @@ for region in worldScrap:
 		regionCountryDeaths=str(listRegion[3]).replace("<td>","").replace("</td>","").replace("<strong>","").replace("</strong>","")
 		regionCountryCasesLast=str(listRegion[4]).replace("<td>","").replace("</td>","").replace("<strong>","").replace("</strong>","")
 		if str(regionName)=="\xa0":
-			regionName="Other"
+			regionName=oldRegionName
+			if str(oldRegionName)=="\xa0":
+				regionName="Other"
 		if str(regionCountryCasesLast)=="\xa0":
 			regionCountryCasesLast=0
 		if regionCountryCases=="\xa0":
@@ -139,6 +142,7 @@ for region in worldScrap:
 			regionCountryName=0
 		logs(f"[+] {regionName}:{regionCountryName}:{regionCountryCases},{regionCountryDeaths},{regionCountryCasesLast}...")
 		world[regionName][regionCountryName]=[regionCountryCases,regionCountryDeaths,regionCountryCasesLast]
+		oldRegionName=regionName
 
 frCases,frDeaths,frCasesNew=world["Europe"]["France"]
 frLetality=getLetality(frDeaths,frCases)
