@@ -160,7 +160,7 @@ if frCasesDiff > 0 and frDeathsDiff > 0:
 	api.update_status(toSend1)
 if ueCasesDiff > 0 and ueDeathsDiff > 0:
 	api.update_status(toSend2)
-if worldCases > 0 and worldDeathsDiff > 0:
+if worldCasesDiff > 0 and worldDeathsDiff > 0:
 	api.update_status(toSend3)
 
 #Generate rapport for the next execution.
