@@ -156,9 +156,12 @@ toSend1=(f"#Covid_19 #coronavirus #CoronaUpdate\n🇫🇷 Total:\nCas: {formatNu
 toSend2=(f"#Covid_19 #coronavirus #CoronaUpdate\n🇪🇺 Total:\nCas: {formatNum(ueCases)} ({formatNum(ueCasesDiff)}).\nMort(s): {formatNum(ueDeaths)} ({formatNum(ueDeathsDiff)}).\nNouveau cas (15 dernier jours): {formatNum(ueCasesNew)} ({formatNum(ueCasesNewDiff)}).\nLétalité: {str(ueLetality)[:5]}% ({str(ueLetalityDiff)[:5]}%).")
 toSend3=(f"#Covid_19 #coronavirus #CoronaUpdate\n🌍 Total:\nCas: {formatNum(worldCases)} ({formatNum(worldCasesDiff)}).\nMort(s): {formatNum(worldDeaths)} ({formatNum(worldDeathsDiff)}).\nNouveau cas (15 dernier jours): {formatNum(worldCasesNew)} ({formatNum(worldCasesNewDiff)}).\nLétalité: {str(worldLetality)[:5]}% ({str(worldLetalityDiff)[:5]}%).")
 logs("[*] Envoie des messages...")
-api.update_status(toSend1)
-api.update_status(toSend2)
-api.update_status(toSend3)
+if frCasesDiff > 0 and frDeathsDiff > 0:
+	api.update_status(toSend1)
+if ueCasesDiff > 0 and ueDeathsDiff > 0:
+	api.update_status(toSend2)
+if worldCases > 0 and worldDeathsDiff > 0:
+	api.update_status(toSend3)
 
 #Generate rapport for the next execution.
 generateRapport()
