@@ -157,11 +157,11 @@ toSend2=(f"#Covid_19 #coronavirus #CoronaUpdate\n🇪🇺 Total:\nCas: {formatNu
 toSend3=(f"#Covid_19 #coronavirus #CoronaUpdate\n🌍 Total:\nCas: {formatNum(worldCases)} ({formatNum(worldCasesDiff)}).\nMort(s): {formatNum(worldDeaths)} ({formatNum(worldDeathsDiff)}).\nNouveau cas (15 dernier jours): {formatNum(worldCasesNew)}.\nLétalité: {str(worldLetality)[:5]}% ({str(worldLetalityDiff)[:5]}%).")
 
 logs("[*] Envoie des messages...")
-if frCasesDiff > 0 and frDeathsDiff > 0:
+if int(frCasesDiff) > 0 and int(frDeathsDiff) > 0:
 	api.update_status(toSend1)
-if ueCasesDiff > 0 and ueDeathsDiff > 0:
+if int(ueCasesDiff) > 0 and int(ueDeathsDiff) > 0:
 	api.update_status(toSend2)
-if worldCasesDiff > 0 and worldDeathsDiff > 0:
+if int(worldCasesDiff) > 0 and int(worldDeathsDiff) > 0:
 	api.update_status(toSend3)
 
 #Generate rapport for the next execution.
