@@ -72,43 +72,54 @@ def formatNum(num):
 
 def generateRapport():
 	frCases,frDeaths,frCasesNew=world["Europe"]["France"]
+	beCases,beDeaths,beCasesNew=world["Europe"]["Belgium"]
+	caCases,caDeaths,caCasesNew=world["America"]["Canada"]
 	frLetality=getLetality(frDeaths,frCases)
+	beLetality=float(getLetality(beDeaths,beCases))
+	caLetality=float(getLetality(caDeaths,caCases))
 	ueCases,ueDeaths,ueCasesNew=getRegionTotal("Europe")
 	ueLetality=getLetality(ueDeaths,ueCases)
 	worldCases,worldDeaths,worldCasesNew=getWorldTotal()
 	worldLetality=getLetality(worldDeaths,worldCases)
-	f = open("/home/me/botCoroned/cache/last.rap","w")#the absolute path is required idk why.
-	f.write(str(frCases)+";"+str(frDeaths)+";"+str(frCasesNew)+";"+str(frLetality)+";"+str(ueCases)+";"+str(ueDeaths)+";"+str(ueCasesNew)+";"+str(ueLetality)+";"+str(worldCases)+";"+str(worldDeaths)+";"+str(worldCasesNew)+";"+str(worldLetality))
+	f = open("/home/kng/botCoroned/cache/last.rap","w")
+	f.write(str(frCases)+";"+str(frDeaths)+";"+str(frCasesNew)+";"+str(frLetality)+";"+str(ueCases)+";"+str(ueDeaths)+";"+str(ueCasesNew)+";"+str(ueLetality)+";"+str(worldCases)+";"+str(worldDeaths)+";"+str(worldCasesNew)+";"+str(worldLetality)+";"+str(beCases)+";"+str(beDeaths)+";"+str(beCasesNew)+";"+str(beLetality)+";"+str(caCases)+";"+str(caDeaths)+";"+str(caCasesNew)+";"+str(caLetality))
 	f.close()
 
 #read the rapport of the previous execution.
 def readRapport():
-	f = open("/home/me/botCoroned/cache/last.rap","r")#the absolute path is required idk why.
+	f = open("/home/kng/botCoroned/cache/last.rap","r")
 	rapport = f.read()
-	rapport = rapport.split(";")	
-	return int(rapport[0]), int(rapport[1]), int(rapport[2]), float(rapport[3]), int(rapport[4]), int(rapport[5]), int(rapport[6]), float(rapport[7]), int(rapport[8]), int(rapport[9]), int(rapport[10]), float(rapport[11])
+	rapport = rapport.split(";")
+	return int(rapport[0]), int(rapport[1]), int(rapport[2]), float(rapport[3]), int(rapport[4]), int(rapport[5]), int(rapport[6]), float(rapport[7]), int(rapport[8]), int(rapport[9]), int(rapport[10]), float(rapport[11]), int(rapport[12]), int(rapport[13]), int(rapport[14]), float(rapport[15]), int(rapport[16]), int(rapport[17]), int(rapport[18]), float(rapport[19])
 
 #Get the difference from yesterday's report.
 def diffRapport():
-	frCasesOld, frDeathsOld, frCasesNewOld, frLetalityOld, ueCasesOld, ueDeathsOld, ueCasesNewOld, ueLetalityOld, worldCasesOld, worldDeathsOld ,worldCasesNewOld, worldLetalityOld = readRapport()
+	frCasesOld, frDeathsOld, frCasesNewOld, frLetalityOld, ueCasesOld, ueDeathsOld, ueCasesNewOld, ueLetalityOld, worldCasesOld, worldDeathsOld ,worldCasesNewOld, worldLetalityOld, beCasesOld, beDeathsOld, beCasesNewOld, beLetalityOld, caCasesOld, caDeathsOld, caCasesNewOld, caLetalityOld = readRapport()
 	frCases,frDeaths,frCasesNew=world["Europe"]["France"]
+	beCases,beDeaths,beCasesNew=world["Europe"]["Belgium"]
+	caCases,caDeaths,caCasesNew=world["America"]["Canada"]
 	frCases,frDeaths,frCasesNew=int(frCases),int(frDeaths),int(frCasesNew)
+	beCases,beDeaths,beCasesNew=int(beCases),int(beDeaths),int(beCasesNew)
+	caCases,caDeaths,caCasesNew=int(caCases),int(caDeaths),int(caCasesNew)
 	frLetality=float(getLetality(frDeaths,frCases))
+	beLetality=float(getLetality(beDeaths,beCases))
+	caLetality=float(getLetality(caDeaths,caCases))
 	ueCases,ueDeaths,ueCasesNew=getRegionTotal("Europe")
 	ueLetality=float(getLetality(ueDeaths,ueCases))
 	worldCases,worldDeaths,worldCasesNew=getWorldTotal()
 	worldLetality=float(getLetality(worldDeaths,worldCases))
-	return frCases-frCasesOld, frDeaths-frDeathsOld, frCasesNew-frCasesNewOld, frLetality-frLetalityOld, ueCases-ueCasesOld, ueDeaths-ueDeathsOld, ueCasesNew-ueCasesNewOld, ueLetality-ueLetalityOld, worldCases-worldCasesOld, worldDeaths-worldDeathsOld ,worldCasesNew-worldCasesNewOld, worldLetality-worldLetalityOld
+	return frCases-frCasesOld, frDeaths-frDeathsOld, frCasesNew-frCasesNewOld, frLetality-frLetalityOld, ueCases-ueCasesOld, ueDeaths-ueDeathsOld, ueCasesNew-ueCasesNewOld, ueLetality-ueLetalityOld, worldCases-worldCasesOld, worldDeaths-worldDeathsOld ,worldCasesNew-worldCasesNewOld, worldLetality-worldLetalityOld, beCases-beCasesOld, beDeaths-beDeathsOld, beCasesNew-beCasesNewOld, beLetality-beLetalityOld, caCases-caCasesOld, caDeaths-caDeathsOld, caCasesNew-caCasesNewOld, caLetality-caLetalityOld
+
 #
 def finalDiffRapport():
 	Rapport = {}
-	Rapport["frCasesDiff"], Rapport["frDeathsDiff"], Rapport["frCasesNewDiff"], Rapport["frLetalityDiff"], Rapport["ueCasesDiff"], Rapport["ueDeathsDiff"], Rapport["ueCasesNewDiff"], Rapport["ueLetalityDiff"], Rapport["worldCasesDiff"], Rapport["worldDeathsDiff"], Rapport["worldCasesNewDiff"], Rapport["worldLetalityDiff"] = diffRapport()
+	Rapport["frCasesDiff"], Rapport["frDeathsDiff"], Rapport["frCasesNewDiff"], Rapport["frLetalityDiff"], Rapport["ueCasesDiff"], Rapport["ueDeathsDiff"], Rapport["ueCasesNewDiff"], Rapport["ueLetalityDiff"], Rapport["worldCasesDiff"], Rapport["worldDeathsDiff"], Rapport["worldCasesNewDiff"], Rapport["worldLetalityDiff"], Rapport["beCasesDiff"], Rapport["beDeathsDiff"], Rapport["beCasesNewDiff"], Rapport["beLetalityDiff"], Rapport["caCasesDiff"], Rapport["caDeathsDiff"], Rapport["caCasesNewDiff"], Rapport["caLetalityDiff"] = diffRapport()
 
 	for entry in Rapport:
 		if Rapport[entry]>0:
 			Rapport[entry]="+"+str(Rapport[entry])
 
-	return 	Rapport["frCasesDiff"], Rapport["frDeathsDiff"], Rapport["frCasesNewDiff"], Rapport["frLetalityDiff"], Rapport["ueCasesDiff"], Rapport["ueDeathsDiff"], Rapport["ueCasesNewDiff"], Rapport["ueLetalityDiff"], Rapport["worldCasesDiff"], Rapport["worldDeathsDiff"], Rapport["worldCasesNewDiff"], Rapport["worldLetalityDiff"]
+	return Rapport["frCasesDiff"], Rapport["frDeathsDiff"], Rapport["frCasesNewDiff"], Rapport["frLetalityDiff"], Rapport["ueCasesDiff"], Rapport["ueDeathsDiff"], Rapport["ueCasesNewDiff"], Rapport["ueLetalityDiff"], Rapport["worldCasesDiff"], Rapport["worldDeathsDiff"], Rapport["worldCasesNewDiff"], Rapport["worldLetalityDiff"], Rapport["beCasesDiff"], Rapport["beDeathsDiff"], Rapport["beCasesNewDiff"], Rapport["beLetalityDiff"], Rapport["caCasesDiff"], Rapport["caDeathsDiff"], Rapport["caCasesNewDiff"], Rapport["caLetalityDiff"]
 
 #Web scrapping part
 logs("[*] Connexion au site...")
@@ -145,24 +156,35 @@ for region in worldScrap:
 		oldRegionName=regionName
 
 frCases,frDeaths,frCasesNew=world["Europe"]["France"]
+beCases,beDeaths,beCasesNew=world["Europe"]["Belgium"]
+caCases,caDeaths,caCasesNew=world["America"]["Canada"]
 frLetality=getLetality(frDeaths,frCases)
+beLetality=float(getLetality(beDeaths,beCases))
+caLetality=float(getLetality(caDeaths,caCases))
 ueCases,ueDeaths,ueCasesNew=getRegionTotal("Europe")
 ueLetality=getLetality(ueDeaths,ueCases)
 worldCases,worldDeaths,worldCasesNew=getWorldTotal()
 worldLetality=getLetality(worldDeaths,worldCases)
-frCasesDiff, frDeathsDiff, frCasesNewDiff, frLetalityDiff, ueCasesDiff, ueDeathsDiff, ueCasesNewDiff, ueLetalityDiff, worldCasesDiff, worldDeathsDiff, worldCasesNewDiff, worldLetalityDiff = finalDiffRapport()
+frCasesDiff, frDeathsDiff, frCasesNewDiff, frLetalityDiff, ueCasesDiff, ueDeathsDiff, ueCasesNewDiff, ueLetalityDiff, worldCasesDiff, worldDeathsDiff, worldCasesNewDiff, worldLetalityDiff, beCasesDiff, beDeathsDiff, beCasesNewDiff, beLetalityDiff, caCasesDiff, caDeathsDiff, caCasesNewDiff, caLetalityDiff= finalDiffRapport()
 
 toSend1=(f"#Covid_19 #coronavirus #CoronaUpdate\n🇫🇷 Total:\nCas: {formatNum(frCases)} ({formatNum(frCasesDiff)}).\nMort(s): {formatNum(frDeaths)} ({formatNum(frDeathsDiff)}).\nNouveau cas (15 dernier jours): {formatNum(frCasesNew)}.\nLétalité: {str(frLetality)[:5]}% ({str(frLetalityDiff)[:5]}%).")
-toSend2=(f"#Covid_19 #coronavirus #CoronaUpdate\n🇪🇺 Total:\nCas: {formatNum(ueCases)} ({formatNum(ueCasesDiff)}).\nMort(s): {formatNum(ueDeaths)} ({formatNum(ueDeathsDiff)}).\nNouveau cas (15 dernier jours): {formatNum(ueCasesNew)}.\nLétalité: {str(ueLetality)[:5]}% ({str(ueLetalityDiff)[:5]}%).")
-toSend3=(f"#Covid_19 #coronavirus #CoronaUpdate\n🌍 Total:\nCas: {formatNum(worldCases)} ({formatNum(worldCasesDiff)}).\nMort(s): {formatNum(worldDeaths)} ({formatNum(worldDeathsDiff)}).\nNouveau cas (15 dernier jours): {formatNum(worldCasesNew)}.\nLétalité: {str(worldLetality)[:5]}% ({str(worldLetalityDiff)[:5]}%).")
+toSend2=(f"#Covid_19 #coronavirus #CoronaUpdate\n🇧🇪 Total:\nCas: {formatNum(beCases)} ({formatNum(beCasesDiff)}).\nMort(s): {formatNum(beDeaths)} ({formatNum(beDeathsDiff)}).\nNouveau cas (15 dernier jours): {formatNum(beCasesNew)}.\nLétalité: {str(beLetality)[:5]}% ({str(beLetalityDiff)[:5]}%).")
+toSend3=(f"#Covid_19 #coronavirus #CoronaUpdate\n🇪🇺 Total:\nCas: {formatNum(ueCases)} ({formatNum(ueCasesDiff)}).\nMort(s): {formatNum(ueDeaths)} ({formatNum(ueDeathsDiff)}).\nNouveau cas (15 dernier jours): {formatNum(ueCasesNew)}.\nLétalité: {str(ueLetality)[:5]}% ({str(ueLetalityDiff)[:5]}%).")
+toSend4=(f"#Covid_19 #coronavirus #CoronaUpdate\n🇨🇦 Total:\nCas: {formatNum(caCases)} ({formatNum(caCasesDiff)}).\nMort(s): {formatNum(caDeaths)} ({formatNum(caDeathsDiff)}).\nNouveau cas (15 dernier jours): {formatNum(caCasesNew)}.\nLétalité: {str(caLetality)[:5]}% ({str(caLetalityDiff)[:5]}%).")
+toSend5=(f"#Covid_19 #coronavirus #CoronaUpdate\n🌍 Total:\nCas: {formatNum(worldCases)} ({formatNum(worldCasesDiff)}).\nMort(s): {formatNum(worldDeaths)} ({formatNum(worldDeathsDiff)}).\nNouveau cas (15 dernier jours): {formatNum(worldCasesNew)}.\nLétalité: {str(worldLetality)[:5]}% ({str(worldLetalityDiff)[:5]}%).")
 
 logs("[*] Envoie des messages...")
+
 if int(frCasesDiff) > 0 and int(frDeathsDiff) > 0:
 	api.update_status(toSend1)
-if int(ueCasesDiff) > 0 and int(ueDeathsDiff) > 0:
+if int(beCasesDiff) > 0 and int(beDeathsDiff) > 0:
 	api.update_status(toSend2)
-if int(worldCasesDiff) > 0 and int(worldDeathsDiff) > 0:
+if int(ueCasesDiff) > 0 and int(ueDeathsDiff) > 0:
 	api.update_status(toSend3)
+if int(caCasesDiff) > 0 and int(caDeathsDiff) > 0:
+	api.update_status(toSend4)
+if int(worldCasesDiff) > 0 and int(worldDeathsDiff) > 0:
+	api.update_status(toSend5)
 
 #Generate rapport for the next execution.
 generateRapport()
